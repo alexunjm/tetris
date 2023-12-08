@@ -25,13 +25,33 @@ const board = [
   [1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
 ]
 
-// piece
-const piece = {
-  position: { x: 5, y: 5 },
-  shape: [
+// pieces
+const SHAPES = [
+  [
     [1, 1],
     [1, 1]
+  ],
+  [
+    [1, 0],
+    [1, 0],
+    [1, 1]
+  ],
+  [
+    [1, 1, 0],
+    [0, 1, 1]
+  ],
+  [
+    [1, 1, 1, 1]
+  ],
+  [
+    [0, 1, 0],
+    [1, 1, 1]
   ]
+]
+const piece = {
+  position: { x: 5, y: 5 },
+  shape: randomShape()
+
 }
 
 // game loop
@@ -120,8 +140,15 @@ function solidifyPiece () {
   })
   removeRows()
 
+  // random piece
+  piece.shape = randomShape()
+  // reset position
   piece.position.x = 0
   piece.position.y = 0
+}
+
+function randomShape () {
+  return SHAPES[Math.floor(Math.random() * SHAPES.length)]
 }
 
 // remove board rows
