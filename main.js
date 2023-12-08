@@ -20,7 +20,7 @@ context.scale(BLOCK_SIZE, BLOCK_SIZE)
 
 // board
 const board = [
-  ...Array(BOARD_HEIGHT - 1).fill(Array(BOARD_WIDTH).fill(0)),
+  ...Array(BOARD_HEIGHT - 1).fill(0).map(() => Array(BOARD_WIDTH).fill(0)),
   [1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
 ]
 
@@ -77,7 +77,7 @@ document.addEventListener('keydown', event => {
   }
   if (event.key === 'ArrowDown') {
     piece.position.y++
-    pieceHasBeenCollided() && piece.position.y--
+    pieceHasBeenCollided() && piece.position.y-- && solidifyPiece()
   }
 })
 
@@ -89,6 +89,20 @@ function pieceHasBeenCollided () {
         board[y + piece.position.y]?.[x + piece.position.x] !== 0
     })
   })
+}
+
+// solidify pieces
+function solidifyPiece () {
+  piece.shape.forEach((row, y) => {
+    row.forEach((value, x) => {
+      if (value === 1) {
+        board[y + piece.position.y][x + piece.position.x] = 1
+      }
+    })
+  })
+
+  piece.position.x = 0
+  piece.position.y = 0
 }
 
 update()
