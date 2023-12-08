@@ -51,7 +51,10 @@ const SHAPES = [
 const piece = {
   position: { x: 5, y: 5 },
   shape: randomShape()
+}
 
+function randomShape () {
+  return SHAPES[Math.floor(Math.random() * SHAPES.length)]
 }
 
 // game loop
@@ -145,10 +148,8 @@ function solidifyPiece () {
   // reset position
   piece.position.x = 0
   piece.position.y = 0
-}
 
-function randomShape () {
-  return SHAPES[Math.floor(Math.random() * SHAPES.length)]
+  pieceHasBeenCollided() && window.alert('Game Over')
 }
 
 // remove board rows
