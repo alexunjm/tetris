@@ -1,17 +1,10 @@
 import './style.css'
+import { BLOCK_SIZE, BOARD_HEIGHT, BOARD_WIDTH, COLOR } from './constants.js'
+import { initialPosition, randomShape } from './piece.js'
 
 // initializing canvas
 const canvas = document.querySelector('canvas')
 const context = canvas.getContext('2d')
-
-const BLOCK_SIZE = 20
-const BOARD_WIDTH = 14
-const BOARD_HEIGHT = 30
-const COLOR = {
-  BOARD: '#444',
-  SOLID: '#02D',
-  PIECE: '#2A0'
-}
 
 canvas.width = BOARD_WIDTH * BLOCK_SIZE
 canvas.height = BOARD_HEIGHT * BLOCK_SIZE
@@ -25,40 +18,10 @@ const board = [
   [1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
 ]
 
-// pieces
-const SHAPES = [
-  [
-    [1, 1],
-    [1, 1]
-  ],
-  [
-    [1, 0],
-    [1, 0],
-    [1, 1]
-  ],
-  [
-    [1, 1, 0],
-    [0, 1, 1]
-  ],
-  [
-    [1, 1, 1, 1]
-  ],
-  [
-    [0, 1, 0],
-    [1, 1, 1]
-  ]
-]
+// piece
 const piece = {
   position: initialPosition(),
   shape: randomShape()
-}
-
-function initialPosition () {
-  return { x: Math.floor(BOARD_WIDTH / 2) - 2, y: 0 }
-}
-
-function randomShape () {
-  return SHAPES[Math.floor(Math.random() * SHAPES.length)]
 }
 
 // game loop
