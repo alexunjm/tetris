@@ -120,6 +120,19 @@ document.addEventListener('keydown', event => {
     piece.position.y++
     checkCollision()
   }
+  if (event.key === 'ArrowUp') {
+    const rotatedShape = piece.shape[0].map(_ => Array(piece.shape.length).fill(0))
+    for (let y = 0; y < piece.shape.length; y++) {
+      for (let x = 0; x < piece.shape[0].length; x++) {
+        rotatedShape[x][piece.shape.length - y - 1] = piece.shape[y][x]
+      }
+    }
+    const prevShape = piece.shape
+    piece.shape = rotatedShape
+    if (pieceHasBeenCollided()) {
+      piece.shape = prevShape
+    }
+  }
 })
 
 function checkCollision () {
