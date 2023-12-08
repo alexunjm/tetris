@@ -1,24 +1,26 @@
 import './style.css'
-import javascriptLogo from './javascript.svg'
-import viteLogo from '/vite.svg'
-import { setupCounter } from './counter.js'
 
-document.querySelector('#app').innerHTML = `
-  <div>
-    <a href="https://vitejs.dev" target="_blank">
-      <img src="${viteLogo}" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript" target="_blank">
-      <img src="${javascriptLogo}" class="logo vanilla" alt="JavaScript logo" />
-    </a>
-    <h1>Hello Vite!</h1>
-    <div class="card">
-      <button id="counter" type="button"></button>
-    </div>
-    <p class="read-the-docs">
-      Click on the Vite logo to learn more
-    </p>
-  </div>
-`
+// initializing canvas
+const canvas = document.querySelector('canvas')
+const context = canvas.getContext('2d')
 
-setupCounter(document.querySelector('#counter'))
+const BLOCK_SIZE = 20
+const BOARD_WIDTH = 14
+const BOARD_HEIGHT = 30
+
+canvas.width = BOARD_WIDTH * BLOCK_SIZE
+canvas.height = BOARD_HEIGHT * BLOCK_SIZE
+
+context.scale(BLOCK_SIZE, BLOCK_SIZE)
+
+// game loop
+function update () {
+  draw()
+  window.requestAnimationFrame(update)
+}
+
+function draw () {
+  context.fillStyle = '#444'
+  context.fillRect(0, 0, canvas.width, canvas.height)
+}
+update()
