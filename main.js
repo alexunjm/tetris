@@ -18,9 +18,10 @@ canvas.height = BOARD_HEIGHT * BLOCK_SIZE
 
 context.scale(BLOCK_SIZE, BLOCK_SIZE)
 
+const newEmptyRow = () => Array(BOARD_WIDTH).fill(0)
 // board
 const board = [
-  ...Array(BOARD_HEIGHT - 1).fill(0).map(() => Array(BOARD_WIDTH).fill(0)),
+  ...Array(BOARD_HEIGHT - 1).fill(0).map(newEmptyRow),
   [1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
 ]
 
@@ -100,9 +101,23 @@ function solidifyPiece () {
       }
     })
   })
+  removeRows()
 
   piece.position.x = 0
   piece.position.y = 0
+}
+
+// remove board rows
+function removeRows () {
+  const rowsToRemove = []
+  board.forEach((row, y) => {
+    row.every(value => value === 1) && rowsToRemove.push(y)
+  })
+
+  rowsToRemove.forEach(row => {
+    board.splice(row, 1)
+    board.unshift(newEmptyRow())
+  })
 }
 
 update()
