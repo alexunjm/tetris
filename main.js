@@ -35,7 +35,20 @@ const piece = {
 }
 
 // game loop
-function update () {
+let dropCounter = 0
+let lastTime = 0
+function update (time = 0) {
+  const deltaTime = time - lastTime
+  lastTime = time
+
+  dropCounter += deltaTime
+
+  if (dropCounter > 1000) {
+    piece.position.y++
+    dropCounter = 0
+    checkCollision()
+  }
+
   draw()
   window.requestAnimationFrame(update)
 }
@@ -43,7 +56,7 @@ function update () {
 function draw () {
   // drawing game area
   context.fillStyle = COLOR.BOARD
-  context.fillRect(0, 0, canvas.width, canvas.height)
+  context.fillRect(0, 0, BOARD_WIDTH, BOARD_HEIGHT)
 
   // drawing board
   board.forEach((row, y) => {
@@ -78,9 +91,13 @@ document.addEventListener('keydown', event => {
   }
   if (event.key === 'ArrowDown') {
     piece.position.y++
-    pieceHasBeenCollided() && piece.position.y-- && solidifyPiece()
+    checkCollision()
   }
 })
+
+function checkCollision () {
+  pieceHasBeenCollided() && piece.position.y-- && solidifyPiece()
+}
 
 // piece collisions
 function pieceHasBeenCollided () {
